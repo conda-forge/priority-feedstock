@@ -1,35 +1,41 @@
+{% set name = "priority" %}
 {% set version = "2.0.0" %}
 
+
 package:
-  name: priority
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/p/priority/priority-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/priority-{{ version }}.tar.gz
   sha256: c965d54f1b8d0d0b19479db3924c7c36cf672dbf2aec92d43fbdaf4492ba18c0
 
 build:
   number: 0
   noarch: python
-  script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv '
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python
     - pip
+    - python >=3.6
   run:
-    - python
+    - python >=3.6
 
 test:
   imports:
     - priority
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
-  home: http://python-hyper.org/priority/
-  license: MIT
-  license_family: MIT
-  license_file: LICENSE
+  home: https://github.com/python-hyper/priority/
   summary: A pure-Python implementation of the HTTP/2 priority tree
+  dev_url: https://github.com/python-hyper/priority/
+  license: MIT
+  license_file: LICENSE
 
 extra:
   recipe-maintainers:
